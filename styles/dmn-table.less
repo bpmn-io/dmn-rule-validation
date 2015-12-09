@@ -1,0 +1,351 @@
+.dmn-table {
+  position: relative;
+  max-height: 100%;
+  color: @dmn-gray-darker;
+  overflow: auto;
+
+  .dmn-normalize;
+
+  .borderbox;
+
+  * {
+    &:focus {
+      outline: none;
+    }
+  }
+
+  .input {
+    background-color: @dmn-input-color;
+  }
+
+  .output {
+    background-color: @dmn-output-color;
+  }
+
+  .number {
+    text-align: right;
+  }
+
+  [contenteditable] {
+    cursor: text;
+  }
+
+  .dmn-icon-plus {
+    cursor: pointer;
+    color: @dmn-primary;
+  }
+
+  header,
+  tbody,
+  thead {
+    border: 2px solid @dmn-gray;
+  }
+
+  header,
+  td,
+  th {
+    padding: @dmn-vertical-padding @dmn-horizontal-padding;
+  }
+
+  td,
+  th {
+    .empty();
+    border: 1px solid @dmn-gray;
+
+    .transition(color 0.218s ease);
+    .transition(background-color 0.436s ease);
+    .transition(box-shadow 0.436s ease);
+
+    &.focused {
+      box-shadow: 0px 0px 6px 0px fade(@dmn-primary, 60%) inset;
+    }
+  }
+
+  // firefox does not render the borders of the whole table if it has an empty tbody
+  // hiding the tbody will solve that problem
+  // http://jsfiddle.net/zeropaper/kwbd4vgz/
+  tbody:empty {
+    display: none;
+  }
+
+  td,
+  th {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    [contenteditable] {
+      .empty();
+      overflow: hidden;
+      text-overflow: ellipsis;
+      display: block;
+      overflow: hidden;
+      width: 100%;
+      height: 100%;
+      white-space: pre-wrap;
+    }
+    &.invalid {
+      .invalid();
+    }
+  }
+
+  header {
+    background-color: #fff;
+    display: inline-block;
+    border-bottom: none;
+    margin-bottom: -1px;
+    position: relative;
+
+    h3 {
+      font-size: 24px;
+      line-height: 30px;
+      margin: 0.3em auto;
+      font-weight: bold;
+      text-align: center;
+
+      &:empty:before {
+        display: inline;
+        content: '<Set a name>';
+        color: @dmn-warning;
+      }
+    }
+
+    .tjs-table-id {
+      font-size: 18px;
+      background-color: @dmn-gray-light;
+      font-family: monospace;
+      font-weight: 300;
+      color: white;
+      text-align: center;
+      margin: 0px -6px -3px;
+      padding: 2px;
+    }
+  }
+
+  table {
+    font-size: 90%;
+    background-color: @dmn-table-bg;
+    width: 100%;
+    table-layout: fixed;
+    border-collapse: collapse;
+  }
+
+
+  thead {
+    border-bottom: 3px double @dmn-gray;
+
+    > tr:first-of-type {
+      .hit,
+      .hit > span{
+        cursor: pointer;
+      }
+      th {
+        padding-top: @dmn-vertical-padding * 2;
+        padding-bottom: @dmn-vertical-padding * 2;
+      }
+    }
+
+    .annotation {
+      vertical-align: bottom;
+      position: relative;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      .dmn-js-logo {
+        .dmn-js-logo();
+        position: absolute;
+        top: 4px;
+        right: -5px;
+      }
+    }
+
+    th {
+      text-align: center;
+    }
+  }
+
+  .hit {
+    vertical-align: top;
+    width: 3em;
+  }
+
+  .labels,
+  .values,
+  .mappings {
+    text-align: center;
+  }
+
+  .values,
+  .mappings {
+    background-color: lighten(@dmn-gray-light, 6%);
+    color: #fff;
+
+    td,
+    th {
+      cursor: pointer;
+      &.invalid {
+        .invalid();
+      }
+    }
+  }
+
+  .values {
+    td {
+      background-color: @dmn-values-bg;;
+    }
+
+    .col-focused {
+      background-color: @dmn-values-focused-bg;
+    }
+  }
+
+  .mappings {
+    font-family: monospace;
+    td {
+      background-color: @dmn-mappings-bg;;
+    }
+
+    .col-focused {
+      background-color: @dmn-mappings-focused-bg;
+    }
+  }
+
+  &.hide-mappings .mappings {
+    display: none;
+  }
+
+  &.hide-mappings .values {
+    display: none;
+  }
+
+  .labels td:empty:before {
+    .dmn-font;
+    content: '\e813';
+    color: @dmn-danger;
+  }
+
+  tbody {
+    border: 2px solid @dmn-gray;
+    border-top: none;
+
+    tr:nth-child(1) {
+      td, th {
+        border-top: none;
+      }
+    }
+
+    .input {
+      color: @dmn-gray-dark;
+      &.set {
+        color: @dmn-gray-darker;
+      }
+    }
+  }
+
+  tfoot {
+    border: 2px solid @gray-lighter;
+    border-top: none;
+    tr,
+    td {
+      border-color: @gray-lighter;
+    }
+    .add-rule {
+      text-align: right;
+
+      a {
+        cursor: pointer;
+        color: @dmn-primary;
+        &:before {
+          padding: 0;
+          margin: 0;
+        }
+      }
+    }
+
+    &:empty {
+      display: none;
+    }
+  }
+
+
+  .col-focused,
+  .row-focused td {
+    background-color: @dmn-focused-bg;
+  }
+
+  tr > .input + .output {
+    border-left: 3px double @dmn-gray;
+  }
+
+
+
+  /*
+  &.scrollable {
+    position: relative;
+
+    thead,
+    tfoot,
+    tbody
+    {
+      display: block;
+      width: 100%;
+      tr {
+        width: 100%;
+      }
+    }
+    thead,
+    tfoot {
+      display: table;
+    }
+
+    tbody {
+      overflow-x: hidden;
+      overflow-y: scroll;
+      .number {
+        border-left: 0;
+      }
+      .annotation {
+        border-right: none;
+      }
+      tr:last-child td {
+        border-bottom: none;
+      }
+    }
+  }
+  */
+
+
+
+
+
+
+  .tjs-controls {
+    float: right;
+    text-align: right;
+    max-width: 50%;
+    padding: @dmn-vertical-padding @dmn-horizontal-padding;
+    font-size: 90%;
+
+    background-color: @dmn-gray-lighter;
+    a {
+      cursor: pointer;
+    }
+  }
+
+
+
+  &.dmn-table-compact {
+    font-size: 95%;
+    header,
+    td,
+    th {
+      padding: 1px 2px;
+    }
+  }
+
+  &.dmn-table-bold {
+    font-size: 110%;
+    header,
+    td,
+    th {
+      padding: 6px 12px;
+    }
+  }
+}
